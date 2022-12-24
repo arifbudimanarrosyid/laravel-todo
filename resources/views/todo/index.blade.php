@@ -76,7 +76,7 @@
                                 <td>
                                     <div class="d-flex gap-2">
 
-                                        <a class="btn btn-info" href="">Edit</a>
+                                        <a class="btn btn-info" href="{{ route('todo.edit', $todo) }}">Edit</a>
                                         <form action="{{ route('todo.incomplete', $todo) }}" method="Post">
                                             @csrf
                                             @method('PATCH')

@@ -64,8 +64,12 @@ class TodoController extends Controller
 
     public function destroy(Todo $todo)
     {
-        $todo->delete();
-        return redirect()->route('todo.index');
+        if (auth()->user()->id == $todo->user_id) {
+            $todo->delete();
+            return redirect()->route('todo.index');
+        } else {
+            return redirect()->route('todo.index');
+        }
     }
 
     public function complete(Todo $todo)
