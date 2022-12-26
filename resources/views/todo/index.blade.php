@@ -4,37 +4,38 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-12">
+            @if (session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
             @if (Route::has('todo.create'))
             <a href="/todo/create" class="btn btn-primary mb-3">Create</a>
             @endif
-            <div class="card">
+
+            @unless (Route::has('todo.create', ))
+            <form method="POST" action="{{ route('todo.store') }}">
+                @csrf
+                @method('POST')
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Task</label>
+                    <input type="text" name="task" class="focus form-control @error('task') is-invalid @enderror"
+                        id="formGroupExampleInput" placeholder="Task name" value="{{ old('task') }}" autofocus>
+                    @error('task')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <button type="submit" class="btn btn-primary mt-4">Create</button>
+            </form>
+            @endunless
+            <div class="card @unless (Route::has('todo.create', )) mt-4 @endunless">
                 <div class="card-header">{{ __('Todo') }}</div>
                 <div class="card-body">
-                    @if (session()->has('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>{{ session('success') }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    @endif
-                    @unless (Route::has('todo.create', ))
-                    <form method="POST" action="{{ route('todo.store') }}">
-                        @csrf
-                        @method('POST')
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">Task</label>
-                            <input type="text" name="task"
-                                class="focus form-control @error('task') is-invalid @enderror"
-                                id="formGroupExampleInput" placeholder="Task name" value="{{ old('task') }}" autofocus>
-                            @error('task')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-4">Create</button>
-                    </form>
-                    @endunless
-                    <table class="table @unless (Route::has('todo.create')) mt-5 @endunless">
+
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>On Going Task</th>
