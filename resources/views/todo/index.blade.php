@@ -7,7 +7,6 @@
             @if (Route::has('todo.create'))
             <a href="/todo/create" class="btn btn-primary mb-3">Create</a>
             @endif
-
             <div class="card">
                 <div class="card-header">{{ __('Todo') }}</div>
                 <div class="card-body">
@@ -35,36 +34,31 @@
                         <button type="submit" class="btn btn-primary mt-4">Create</button>
                     </form>
                     @endunless
-
-
                     <table class="table @unless (Route::has('todo.create')) mt-5 @endunless">
                         <thead>
                             <tr>
-                                {{-- <th scope="col">#</th> --}}
                                 <th>On Going Task</th>
-                                {{-- <th>Info</th> --}}
                                 <th>Created</th>
                                 <th width="150px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($todos as $todo)
+                            @foreach ($todos as $key => $todo)
                             <tr>
                                 <td>{{ $todo->task }}</td>
                                 <td>{{ \Carbon\Carbon::parse($todo->created_at)->diffForHumans() }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
-
-                                        <a class="btn btn-info" href="{{ route('todo.edit', $todo) }}">Edit</a>
+                                        <a class="btn btn-info btn-sm" href="{{ route('todo.edit', $todo) }}">Edit</a>
                                         <form action="{{ route('todo.complete', $todo) }}" method="Post">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-success">Complete</button>
+                                            <button type="submit" class="btn btn-success btn-sm">Complete</button>
                                         </form>
                                         <form action="{{ route('todo.destroy', $todo) }}" method="Post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
                                     </div>
                                 </td>
@@ -83,9 +77,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                {{-- <th scope="col">#</th> --}}
                                 <th>Completed Task</th>
-                                {{-- <th>Info</th> --}}
                                 <th>Created</th>
                                 <th width="150px">Action</th>
                             </tr>
@@ -97,17 +89,16 @@
                                 <td>{{ \Carbon\Carbon::parse($todo->created_at)->diffForHumans() }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
-
-                                        <a class="btn btn-info" href="{{ route('todo.edit', $todo) }}">Edit</a>
+                                        <a class="btn btn-info btn-sm" href="{{ route('todo.edit', $todo) }}">Edit</a>
                                         <form action="{{ route('todo.incomplete', $todo) }}" method="Post">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-success">Undo</button>
+                                            <button type="submit" class="btn btn-success btn-sm">Undo</button>
                                         </form>
                                         <form action="{{ route('todo.destroy', $todo) }}" method="Post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
                                     </div>
                                 </td>
@@ -119,7 +110,7 @@
                     <form action="{{ route('todo.deleteallcompleted') }}" method="Post">
                         @csrf
                         @method('delete')
-                        <button type="submit" class="btn btn-danger">Delete All Completed Task</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete All Completed Task</button>
                     </form>
                 </div>
             </div>
