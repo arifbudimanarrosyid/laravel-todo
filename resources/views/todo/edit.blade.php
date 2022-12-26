@@ -13,11 +13,16 @@
                         @method('patch')
                         <div class="form-group">
                             <label for="formGroupExampleInput">Task</label>
-                            <input type="text" name="task" class="form-control" id="formGroupExampleInput"
-                                placeholder="Task name" value="{{ $todo->task }}">
-
+                            <input type="text" name="task" class="form-control @error('task') is-invalid @enderror"
+                                id="formGroupExampleInput" placeholder="Task name" value="{{ old('task',$todo->task) }}"
+                                autofocus>
+                            @error('task')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                        <button type="submit" class="btn btn-primary mt-4">Save</button>
                     </form>
 
                 </div>

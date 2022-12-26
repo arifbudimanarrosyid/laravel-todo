@@ -10,13 +10,19 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('todo.store') }}">
                         @csrf
-                        {{-- @method('POST') --}}
+                        @method('POST')
                         <div class="form-group">
-                          <label for="formGroupExampleInput">Task</label>
-                          <input type="text" name="task" class="form-control" id="formGroupExampleInput" placeholder="Task name">
+                            <label for="formGroupExampleInput">Task</label>
+                            <input type="text" name="task" class="form-control @error('task') is-invalid @enderror" id="formGroupExampleInput"
+                                placeholder="Task name" value="{{ old('task') }}" autofocus>
+                            @error('task')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
-                      </form>
+                        <button type="submit" class="btn btn-primary mt-4">Create</button>
+                    </form>
 
                 </div>
 
