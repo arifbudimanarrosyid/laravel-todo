@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -131,16 +129,18 @@ class TodoController extends Controller
 
     public function complete(Todo $todo)
     {
-        $todo->is_completed = true;
-        $todo->save();
+        $todo->update([
+            'is_completed' => true,
+        ]);
         // dd($todo);
         return redirect()->route('todo.index')->with('success', 'Completed successfully!');
     }
 
     public function incomplete(Todo $todo)
     {
-        $todo->is_completed = false;
-        $todo->save();
+        $todo->update([
+            'is_completed' => false,
+        ]);
         // dd($todo);
         return redirect()->route('todo.index')->with('success', 'Undo complete successfully!');
     }
